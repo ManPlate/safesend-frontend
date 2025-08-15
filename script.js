@@ -1,0 +1,35 @@
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("fileInput");
+const status = document.getElementById("status");
+
+// Replace this with your deployed Edge Function URL
+const FUNCTION_URL = "https://cibkejtziawkotknqshu.supabase.co/functions/v1/upload";
+
+uploadBtn.addEventListener("click", async () => {
+  if (!fileInput.files.length) {
+    status.textContent = "Please select a file first.";
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("file", file);
+
+  status.textContent = "Uploading...";
+
+  try {
+    const res = await fetch(FUNCTION_URL, {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      status.textContent = `Upload successful! Link: ${data.link}`;
+    } else {
+      status.textContent = `Error: ${data.error}`;
+    }
+  } catch (err) {
+    status.textContent = `Error: ${err.message}`;
+  }
+});
