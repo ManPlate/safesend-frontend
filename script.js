@@ -18,7 +18,7 @@ uploadBtn.addEventListener("click", async () => {
   status.textContent = "Uploading...";
 
   try {
-    // ✅ For now, skip JWT since no auth is set up
+    // ✅ No auth for now
     const res = await fetch(FUNCTION_URL, {
       method: "POST",
       body: formData
@@ -28,7 +28,6 @@ uploadBtn.addEventListener("click", async () => {
     if (res.ok) {
       status.textContent = `Upload successful! Link: ${data.link}`;
     } else {
-      // Sometimes Supabase returns 'message' instead of 'error'
       status.textContent = `Error: ${data.error || data.message}`;
     }
   } catch (err) {
