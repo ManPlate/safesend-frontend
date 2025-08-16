@@ -18,7 +18,6 @@ uploadBtn.addEventListener("click", async () => {
   status.textContent = "Uploading...";
 
   try {
-    // ✅ No auth for now
     const res = await fetch(FUNCTION_URL, {
       method: "POST",
       body: formData
